@@ -269,8 +269,9 @@ data = {
       library: 'Python基本',
       description: 'この課題では、少し長めのPythonコードを読み解き、何をしているかを理解することに挑戦します。Python未経験でも大丈夫です。わからないことは、生成AI（ChatGPTなど）に質問しながら進めてください。',
       task_title: '課題：コード読解と質問への回答',
-      task: `
-        <p class="mb-3">以下のPythonコードをよく読んで、下の質問に答えてください。</p>
+      // 課題6のtaskから案内文を分離
+      task_instruction_text: '<p class="mb-3">以下のPythonコードをよく読んで、下の質問に答えてください。</p>',
+      task_questions_html: `
         <ol class="list-decimal list-inside question-list">
             <li>このコードは、何をするためのものだと思いますか？ 一言で説明してみてください。<br>(What do you think this code is for? Try to explain it in one sentence.)</li>
             <li><code>students_data</code> の中には、何人分の学生の情報が入っていますか？<br>(How many students' information is in <code>students_data</code>?)</li>
@@ -422,17 +423,15 @@ function renderSidebar() {
 
 function formatTextToHtml(text) {
     if (typeof text !== 'string') return '';
-    // Markdown風リストをHTMLリストに変換
-    text = text.replace(/^\* (.*$)/gm, '<li>$1</li>'); // 行頭の * を li に
-    text = text.replace(/<\/li>\n<li>/g, '</li><li>'); // 連続するliタグの間の改行を削除
+    text = text.replace(/^\* (.*$)/gm, '<li>$1</li>'); 
+    text = text.replace(/<\/li>\n<li>/g, '</li><li>'); 
 
-    // 質問リストの整形（olタグで囲む）
     if (text.includes('<ol class="list-decimal list-inside question-list">')) {
-        // 既に整形済みなら何もしない
-    } else if (text.match(/^\s*<li/m) && !text.match(/^\s*<ul/m) && !text.match(/^\s*<ol/m) ) { // liで始まるがul/olで囲まれていない場合
+        // Do nothing if already formatted
+    } else if (text.match(/^\s*<li/m) && !text.match(/^\s*<ul/m) && !text.match(/^\s*<ol/m) ) { 
          text = '<ul>' + text.replace(/<li>/g, '<li class="list-disc ml-5 mb-1">') + '</ul>';
     } else if (!text.startsWith('<ul>') && !text.startsWith('<ol>')) {
-       text = text.replace(/\n/g, '<br>'); // それ以外は改行をbrに
+       text = text.replace(/\n/g, '<br>'); 
     }
     return text;
 }
@@ -472,12 +471,16 @@ function renderExerciseContent(exerciseId) {
         hintHtml = `<pre class="code-block"><code>${escapeHtml(exercise.code_hint.trim())}</code></pre>`;
     }
 
-    let taskHtml = exercise.task;
-    if (exercise.id === 'kadai6') { 
-        taskHtml = exercise.task;
+    let taskInstructionHtml = '';
+    let taskQuestionsHtml = '';
+
+    if (exercise.id === 'kadai6') {
+        taskInstructionHtml = exercise.task_instruction_text || '';
+        taskQuestionsHtml = exercise.task_questions_html || '';
     } else {
-        taskHtml = formatTextToHtml(exercise.task);
+        taskQuestionsHtml = formatTextToHtml(exercise.task || '');
     }
+
 
     // 各セクションのHTMLを生成
     let descriptionSection = `
@@ -485,11 +488,15 @@ function renderExerciseContent(exerciseId) {
         <div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.description)}</div>
     `;
 
-    let taskSection = `
-        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.task_title}</h3>
-        <div class="text-gray-700 mb-4 whitespace-pre-wrap">${taskHtml}</div>
-    `;
+    // 課題6の場合、task_title は質問リストの直前に表示
+    let taskTitleHtml = `<h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.task_title}</h3>`;
 
+    let taskSectionContent = (exercise.id === 'kadai6') ? taskQuestionsHtml : taskQuestionsHtml;
+    let taskSection = `
+        ${(exercise.id === 'kadai6') ? taskTitleHtml : taskTitleHtml}
+        <div class="text-gray-700 mb-4 whitespace-pre-wrap">${taskSectionContent}</div>
+    `;
+    
     let dataSection = `
         <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.data_description}</h3>
         ${dataHtml}
@@ -504,10 +511,10 @@ function renderExerciseContent(exerciseId) {
 
     let finalHtmlStructure;
 
-    // 課題6の場合のみ、コードセクションを問題文セクションの前に表示
     if (exercise.id === 'kadai6') {
         finalHtmlStructure = `
             ${descriptionSection}
+            ${taskInstructionHtml} 
             ${dataSection}  
             ${taskSection}  
             ${noteSection}
