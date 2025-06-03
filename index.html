@@ -109,6 +109,17 @@
                 margin-left: 0;
             }
         }
+        .question-list li {
+            margin-bottom: 0.75rem; /* mb-3 */
+            line-height: 1.6;
+        }
+        .question-list code {
+            background-color: #e5e7eb; /* bg-gray-200 */
+            color: #1f2937; /* text-gray-800 */
+            padding: 0.125rem 0.3rem; /* px-1 py-0.5 */
+            border-radius: 0.25rem; /* rounded-sm */
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -251,6 +262,120 @@ data = {
         <p>新しいデータで予測する: <code>モデルオブジェクト.predict(予測したいデータの特徴量)</code></p>
         <p>NumPyを使ってデータを配列の形にすると便利です: <code>np.array()</code></p>
       `
+    },
+    {
+      id: 'kadai6',
+      title: '課題6：Pythonコード読解チャレンジ 🧑‍💻🧠',
+      library: 'Python基本',
+      description: 'この課題では、少し長めのPythonコードを読み解き、何をしているかを理解することに挑戦します。Python未経験でも大丈夫です。わからないことは、生成AI（ChatGPTなど）に質問しながら進めてください。',
+      task_title: '課題：コード読解と質問への回答',
+      task: `
+        <p class="mb-3">以下のPythonコードをよく読んで、下の質問に答えてください。</p>
+        <ol class="list-decimal list-inside question-list">
+            <li>このコードは、何をするためのものだと思いますか？ 一言で説明してみてください。<br>(What do you think this code is for? Try to explain it in one sentence.)</li>
+            <li><code>students_data</code> の中には、何人分の学生の情報が入っていますか？<br>(How many students' information is in <code>students_data</code>?)</li>
+            <li><code>calculate_average_score</code> という名前のコードのまとまり (関数 function) は、何をするものですか？<br>(What does the block of code named <code>calculate_average_score</code> (a function) do?)</li>
+            <li><code>determine_overall_status</code> という名前のコードのまとまり (関数 function) は、学生の状態をどのように決めていますか？ 「Pass」や「Fail」は、何をもとに決まりますか？<br>(How does the block of code named <code>determine_overall_status</code> (a function) decide a student's status? What determines "Pass" or "Fail"?)</li>
+            <li>最後の <code>for student_record in students_data:</code> という行で始まる繰り返し処理 (ループ loop) は、主に何を行っていますか？<br>(What is the repeating process (loop) starting with the line <code>for student_record in students_data:</code> mainly doing at the end?)</li>
+            <li>もし、Aliceさんの <code>scores</code> のリストが <code>[60, 65, 70, 55]</code> に変わったら、Aliceさんのレポートに表示される「Status」はどうなると思いますか？<br>(If Alice's <code>scores</code> list changes to <code>[60, 65, 70, 55]</code>, what do you think Alice's "Status" displayed in the report will be?)</li>
+        </ol>
+      `,
+      data_description: '対象コード：',
+      data_code_lang: 'python',
+      data: `
+students_data = [
+    {
+        "name": "Alice",
+        "scores": [85, 90, 78, 92],
+        "attendance_rate": 0.95
+    },
+    {
+        "name": "Bob",
+        "scores": [70, 65, 80, 75],
+        "attendance_rate": 0.80
+    },
+    {
+        "name": "Charlie",
+        "scores": [90, 95, 88, 100],
+        "attendance_rate": 0.98
+    },
+    {
+        "name": "David",
+        "scores": [50, 55, 60, 45],
+        "attendance_rate": 0.70
+    }
+]
+
+PASSING_THRESHOLD_SCORE = 70
+MINIMUM_ATTENDANCE_RATE = 0.85
+HONORS_THRESHOLD_SCORE = 90
+
+def calculate_average_score(score_list):
+    if not score_list:
+        return 0
+    total_score = sum(score_list)
+    average = total_score / len(score_list)
+    return average
+
+def determine_overall_status(average, attendance):
+    status = ""
+    if average >= PASSING_THRESHOLD_SCORE:
+        status = "Pass"
+        if average >= HONORS_THRESHOLD_SCORE and attendance >= MINIMUM_ATTENDANCE_RATE:
+            status = "Pass with Honors"
+    else:
+        status = "Fail"
+    return status
+
+def generate_student_report(student):
+    name = student["name"]
+    scores = student["scores"]
+    attendance = student["attendance_rate"]
+
+    avg_score = calculate_average_score(scores)
+    overall_status = determine_overall_status(avg_score, attendance)
+
+    report = f"Student: {name}\\n"
+    report += f"  Scores: {scores}\\n"
+    report += f"  Average Score: {avg_score:.2f}\\n"
+    report += f"  Attendance Rate: {attendance*100}%\\n"
+    report += f"  Status: {overall_status}\\n"
+    report += "-" * 20
+    return report
+
+print("Generating Student Reports...")
+print("=" * 30)
+
+all_reports = ""
+number_of_honors_students = 0
+
+for student_record in students_data:
+    individual_report = generate_student_report(student_record)
+    all_reports += individual_report + "\\n"
+
+    avg_for_honors_check = calculate_average_score(student_record["scores"])
+    if avg_for_honors_check >= HONORS_THRESHOLD_SCORE and student_record["attendance_rate"] >= MINIMUM_ATTENDANCE_RATE:
+        number_of_honors_students += 1
+
+print(all_reports)
+
+print("=" * 30)
+print(f"Summary: Total number of students awarded 'Pass with Honors': {number_of_honors_students}")
+print("Report generation complete.")
+`,
+      code_hint_title: 'ヒント：AIへの質問の仕方',
+      code_hint_text: `
+        <p>コードの特定の行や単語が何をしているかわからない場合は、生成AIに具体的に質問してみましょう。</p>
+        <p>例：</p>
+        <ul>
+            <li class="list-disc ml-5 mb-1">「Pythonの <code>def</code> とは何ですか？」</li>
+            <li class="list-disc ml-5 mb-1">「<code>students_data</code> の中身はどういう意味ですか？」</li>
+            <li class="list-disc ml-5 mb-1">「<code>if not score_list:</code> という行は何をチェックしていますか？」</li>
+            <li class="list-disc ml-5 mb-1">「<code>report += f"..."</code> は何をするコードですか？」</li>
+        </ul>
+        <p>AIにコードの一部を見せて、「この部分は何をしていますか？」と尋ねるのも良い方法です。</p>
+        <p>課題の質問6のように、もしデータが変わったらどうなるか予測する際も、AIにコードと変更点を伝えて「この場合、結果はどうなりますか？」と聞いてみましょう。</p>
+      `
     }
 ];
 
@@ -274,6 +399,7 @@ function renderWelcomeMessage() {
 }
 
 function renderSidebar() {
+    sidebarNav.innerHTML = ''; // サイドバーをクリアしてから再描画
     exercises.forEach((exercise, index) => {
         const link = document.createElement('a');
         link.href = `#${exercise.id}`;
@@ -285,7 +411,7 @@ function renderSidebar() {
             renderExerciseContent(exercise.id);
             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
-            if (window.innerWidth < 768) {
+            if (window.innerWidth < 768) { // md breakpoint
                 sidebar.classList.remove('active-sidebar');
                 sidebar.classList.add('hidden-sidebar');
             }
@@ -296,13 +422,17 @@ function renderSidebar() {
 
 function formatTextToHtml(text) {
     if (typeof text !== 'string') return '';
-    text = text.replace(/^\* (.*$)/gm, '<li>$1</li>');
-    text = text.replace(/<\/li>\n<li>/g, '</li><li>'); 
-    if (text.includes('<li>')) {
-        text = '<ul>' + text.replace(/<li>/g, '<li class="list-disc ml-5 mb-1">') + '</ul>';
-    }
-    if (!text.startsWith('<ul>')) {
-       text = text.replace(/\n/g, '<br>');
+    // Markdown風リストをHTMLリストに変換
+    text = text.replace(/^\* (.*$)/gm, '<li>$1</li>'); // 行頭の * を li に
+    text = text.replace(/<\/li>\n<li>/g, '</li><li>'); // 連続するliタグの間の改行を削除
+
+    // 質問リストの整形（olタグで囲む）
+    if (text.includes('<ol class="list-decimal list-inside question-list">')) {
+        // 既に整形済みなら何もしない
+    } else if (text.match(/^\s*<li/m) && !text.match(/^\s*<ul/m) && !text.match(/^\s*<ol/m) ) { // liで始まるがul/olで囲まれていない場合
+         text = '<ul>' + text.replace(/<li>/g, '<li class="list-disc ml-5 mb-1">') + '</ul>';
+    } else if (!text.startsWith('<ul>') && !text.startsWith('<ol>')) {
+       text = text.replace(/\n/g, '<br>'); // それ以外は改行をbrに
     }
     return text;
 }
@@ -311,7 +441,6 @@ function formatTextToHtml(text) {
 function renderExerciseContent(exerciseId) {
     const exercise = exercises.find(ex => ex.id === exerciseId);
     if (!exercise) {
-        // 課題が見つからない場合はウェルカムページを表示
         renderWelcomeMessage();
         return;
     }
@@ -328,7 +457,7 @@ function renderExerciseContent(exerciseId) {
 
     let dataHtml = '';
     if (exercise.data_code_lang) {
-        dataHtml = `<pre class="code-block"><code>${escapeHtml(exercise.data.trim())}</code></pre>`;
+        dataHtml = `<pre class="code-block"><code>${exercise.data.trim()}</code></pre>`;
     } else if (exercise.data.includes('`')) {
          dataHtml = `<div class="text-gray-700 mb-4 whitespace-pre-wrap">${exercise.data.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-gray-800 text-sm px-1 py-0.5 rounded">$1</code>').replace(/\n/g, '<br>')}</div>`;
     }
@@ -339,29 +468,66 @@ function renderExerciseContent(exerciseId) {
     let hintHtml = '';
     if (exercise.code_hint_text) {
         hintHtml = `<div class="hint-block">${exercise.code_hint_text.trim()}</div>`;
-    } else if (exercise.code_hint) { 
+    } else if (exercise.code_hint) {
         hintHtml = `<pre class="code-block"><code>${escapeHtml(exercise.code_hint.trim())}</code></pre>`;
     }
 
+    let taskHtml = exercise.task;
+    if (exercise.id === 'kadai6') { 
+        taskHtml = exercise.task;
+    } else {
+        taskHtml = formatTextToHtml(exercise.task);
+    }
+
+    // 各セクションのHTMLを生成
+    let descriptionSection = `
+        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">ライブラリ説明・課題の目的</h3>
+        <div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.description)}</div>
+    `;
+
+    let taskSection = `
+        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.task_title}</h3>
+        <div class="text-gray-700 mb-4 whitespace-pre-wrap">${taskHtml}</div>
+    `;
+
+    let dataSection = `
+        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.data_description}</h3>
+        ${dataHtml}
+    `;
+
+    let noteSection = exercise.note ? `<div class="mt-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded"><p class="whitespace-pre-wrap">${formatTextToHtml(exercise.note)}</p></div>` : '';
+
+    let hintSection = `
+        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.code_hint_title}</h3>
+        ${hintHtml}
+    `;
+
+    let finalHtmlStructure;
+
+    // 課題6の場合のみ、コードセクションを問題文セクションの前に表示
+    if (exercise.id === 'kadai6') {
+        finalHtmlStructure = `
+            ${descriptionSection}
+            ${dataSection}  
+            ${taskSection}  
+            ${noteSection}
+            ${hintSection}
+        `;
+    } else {
+        finalHtmlStructure = `
+            ${descriptionSection}
+            ${taskSection}
+            ${dataSection}
+            ${noteSection}
+            ${hintSection}
+        `;
+    }
 
     exerciseContentDiv.innerHTML = `
         <div class="card">
             <h2 class="text-3xl font-semibold text-gray-800 mb-2">${exercise.title}</h2>
             <p class="text-sm text-indigo-600 font-medium mb-4">${exercise.library}</p>
-            
-            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">ライブラリ説明</h3>
-            <p class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.description)}</p>
-
-            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.task_title}</h3>
-            <div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.task)}</div>
-
-            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.data_description}</h3>
-            ${dataHtml}
-
-            ${exercise.note ? `<div class="mt-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded"><p class="whitespace-pre-wrap">${formatTextToHtml(exercise.note)}</p></div>` : ''}
-
-            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.code_hint_title}</h3>
-            ${hintHtml}
+            ${finalHtmlStructure}
         </div>
     `;
     window.scrollTo(0, 0);
@@ -384,7 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        // ハッシュがない、または無効なハッシュの場合、ウェルカムメッセージを表示
         renderWelcomeMessage();
     }
     
@@ -406,13 +571,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newExerciseToLoad) {
             renderExerciseContent(newExerciseToLoad.id);
             document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('active'); // Remove active from all
+                link.classList.remove('active');
                 if (link.getAttribute('href') === `#${newExerciseToLoad.id}`) {
                     link.classList.add('active');
                 }
             });
         } else {
-            // 無効なハッシュになった場合、ウェルカムメッセージを表示
             renderWelcomeMessage();
         }
     });
