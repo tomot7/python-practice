@@ -269,7 +269,6 @@ data = {
       library: 'Python基本',
       description: 'この課題では、少し長めのPythonコードを読み解き、何をしているかを理解することに挑戦します。Python未経験でも大丈夫です。わからないことは、生成AI（ChatGPTなど）に質問しながら進めてください。',
       task_title: '課題：コード読解と質問への回答',
-      // 課題6のtaskから案内文を分離
       task_instruction_text: '<p class="mb-3">以下のPythonコードをよく読んで、下の質問に答えてください。</p>',
       task_questions_html: `
         <ol class="list-decimal list-inside question-list">
@@ -377,6 +376,49 @@ print("Report generation complete.")
         <p>AIにコードの一部を見せて、「この部分は何をしていますか？」と尋ねるのも良い方法です。</p>
         <p>課題の質問6のように、もしデータが変わったらどうなるか予測する際も、AIにコードと変更点を伝えて「この場合、結果はどうなりますか？」と聞いてみましょう。</p>
       `
+    },
+    {
+      id: 'kadai7',
+      title: '課題7：生成AIを活用したライブラリ調査 🤖🔍',
+      library: '生成AI活用 & ファクトチェック',
+      description: '生成AIは強力なツールですが、その情報が常に正確とは限りません。この課題では、生成AIを使って情報収集を行い、その結果を自分自身で検証（ファクトチェック）するスキルを学びます。',
+      task_title: '課題：',
+      task: `
+        <p class="mb-4">この課題では、以下の手順で調査を行い、最終的に<b>「AIの出力」</b>と<b>「ファクトチェックの結果」</b>の2点を提出物としてまとめてください。</p>
+        <ol class="list-decimal list-inside question-list">
+            <li class="mb-3">
+                <b>ステップ1: AIへの質問</b><br>
+                生成AI（ChatGPT, Geminiなど）に、「データ分析でよく使われるPythonライブラリを3つ教えてください」といった質問をします。
+            </li>
+            <li class="mb-3">
+                <b>ステップ2: ファクトチェック</b><br>
+                AIの回答を、公式サイトや信頼できる情報源と照らし合わせて検証します。
+            </li>
+            <li>
+                <b>ステップ3: 提出物の作成</b><br>
+                以下の2つの項目について、調査結果をまとめてください。
+                <ul class="list-disc list-inside ml-6 mt-2">
+                    <li><b>AIの出力：</b><br>
+                    AIが生成した回答の全文をコピー＆ペーストしてください。</li>
+                    <li class="mt-2"><b>ファクトチェックの結果：</b><br>
+                    AIの回答の中にあった間違いを、その根拠（参照したURLなど）と共に具体的に指摘してください。完全に正しかった場合は、その旨を記述してください。
+                    <br>（例：AIは〇〇と説明していましたが、公式サイト（URL: xxxx）によると、実際には△△が正しいです。）
+                    </li>
+                </ul>
+            </li>
+        </ol>
+      `,
+      code_hint_title: 'ヒント：ファクトチェックのポイント',
+      code_hint_text: `
+        <p>AIの回答を検証するときは、以下の点に注目してみましょう。</p>
+        <ul>
+            <li class="list-disc ml-5 mb-1"><strong>公式サイトは存在するか？</strong>: まずはそのライブラリの公式ドキュメントを探してみましょう。</li>
+            <li class="list-disc ml-5 mb-1"><strong>主な用途は何か？</strong>: AIが説明する用途（例：「数値計算が得意」「データ可視化に使われる」）は、公式サイトの情報と一致していますか？</li>
+            <li class="list-disc ml-5 mb-1"><strong>現在も使われているか？</strong>: ライブラリの最終更新日はいつ頃か、コミュニティは活発かなどを調べると、今でも広く使われている技術かどうかがわかります。</li>
+            <li class="list-disc ml-5 mb-1"><strong>他の信頼できる情報源は？</strong>: Wikipedia、有名な技術ブログ、書籍など、複数の情報源を比較すると、より正確な情報が得られます。</li>
+        </ul>
+      `,
+      note: 'この課題に正解はありません。大事なのは、情報を鵜呑みにせず、自分で調べて確かめるプロセスです。'
     }
 ];
 
@@ -404,8 +446,10 @@ function renderSidebar() {
     exercises.forEach((exercise, index) => {
         const link = document.createElement('a');
         link.href = `#${exercise.id}`;
-        const displayTitle = exercise.title.split('：')[1] || exercise.title;
-        link.textContent = `課題 ${index + 1}: ${displayTitle.substring(0, displayTitle.indexOf(' ') !== -1 ? displayTitle.indexOf(' ') : displayTitle.length)}`;
+        // タイトルから課題の概要を抽出
+        const titleParts = exercise.title.split('：');
+        const shortTitle = titleParts.length > 1 ? titleParts[1].split(' ')[0] : exercise.title;
+        link.textContent = `課題 ${index + 1}: ${shortTitle}`;
         link.classList.add('sidebar-link');
         link.onclick = (event) => {
             event.preventDefault();
@@ -423,14 +467,18 @@ function renderSidebar() {
 
 function formatTextToHtml(text) {
     if (typeof text !== 'string') return '';
+    
+    // HTMLタグが含まれている場合は、そのまま返す
+    if (/<[a-z][\s\S]*>/i.test(text)) {
+        return text;
+    }
+
     text = text.replace(/^\* (.*$)/gm, '<li>$1</li>'); 
     text = text.replace(/<\/li>\n<li>/g, '</li><li>'); 
 
-    if (text.includes('<ol class="list-decimal list-inside question-list">')) {
-        // Do nothing if already formatted
-    } else if (text.match(/^\s*<li/m) && !text.match(/^\s*<ul/m) && !text.match(/^\s*<ol/m) ) { 
+    if (text.match(/^\s*<li/m) && !text.match(/^\s*<ul/m) && !text.match(/^\s*<ol/m) ) { 
          text = '<ul>' + text.replace(/<li>/g, '<li class="list-disc ml-5 mb-1">') + '</ul>';
-    } else if (!text.startsWith('<ul>') && !text.startsWith('<ol>')) {
+    } else {
        text = text.replace(/\n/g, '<br>'); 
     }
     return text;
@@ -444,25 +492,18 @@ function renderExerciseContent(exerciseId) {
         return;
     }
 
-    const escapeHtml = (unsafe) => {
-        if (typeof unsafe !== 'string') return '';
-        return unsafe
-             .replace(/&/g, "&amp;")
-             .replace(/</g, "&lt;")
-             .replace(/>/g, "&gt;")
-             .replace(/"/g, "&quot;")
-             .replace(/'/g, "&#039;");
+    let dataHtml = '';
+    // exercise.dataが存在する場合のみ、データ表示用のHTMLを生成する
+    if (exercise.data) {
+        if (exercise.data_code_lang) {
+            dataHtml = `<pre class="code-block"><code>${exercise.data.trim()}</code></pre>`;
+        } else if (exercise.data.includes('`')) {
+            dataHtml = `<div class="text-gray-700 mb-4 whitespace-pre-wrap">${exercise.data.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-gray-800 text-sm px-1 py-0.5 rounded">$1</code>').replace(/\n/g, '<br>')}</div>`;
+        } else {
+            dataHtml = `<div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.data.trim())}</div>`;
+        }
     }
 
-    let dataHtml = '';
-    if (exercise.data_code_lang) {
-        dataHtml = `<pre class="code-block"><code>${exercise.data.trim()}</code></pre>`;
-    } else if (exercise.data.includes('`')) {
-         dataHtml = `<div class="text-gray-700 mb-4 whitespace-pre-wrap">${exercise.data.replace(/`([^`]+)`/g, '<code class="bg-gray-200 text-gray-800 text-sm px-1 py-0.5 rounded">$1</code>').replace(/\n/g, '<br>')}</div>`;
-    }
-    else {
-        dataHtml = `<div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.data.trim())}</div>`;
-    }
 
     let hintHtml = '';
     if (exercise.code_hint_text) {
@@ -487,27 +528,33 @@ function renderExerciseContent(exerciseId) {
         <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">ライブラリ説明・課題の目的</h3>
         <div class="text-gray-700 mb-4 whitespace-pre-wrap">${formatTextToHtml(exercise.description)}</div>
     `;
-
-    // 課題6の場合、task_title は質問リストの直前に表示
+    
     let taskTitleHtml = `<h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.task_title}</h3>`;
 
     let taskSectionContent = (exercise.id === 'kadai6') ? taskQuestionsHtml : taskQuestionsHtml;
     let taskSection = `
-        ${(exercise.id === 'kadai6') ? taskTitleHtml : taskTitleHtml}
-        <div class="text-gray-700 mb-4 whitespace-pre-wrap">${taskSectionContent}</div>
+        ${(exercise.id !== 'kadai6' || exercise.task_title) ? taskTitleHtml : ''}
+        <div class="text-gray-700 mb-4">${taskSectionContent}</div>
     `;
     
-    let dataSection = `
-        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.data_description}</h3>
-        ${dataHtml}
-    `;
+    // data_descriptionが存在する場合のみデータセクションを生成
+    let dataSection = '';
+    if (exercise.data_description) {
+        dataSection = `
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.data_description}</h3>
+            ${dataHtml}
+        `;
+    }
 
     let noteSection = exercise.note ? `<div class="mt-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded"><p class="whitespace-pre-wrap">${formatTextToHtml(exercise.note)}</p></div>` : '';
 
-    let hintSection = `
-        <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.code_hint_title}</h3>
-        ${hintHtml}
-    `;
+    let hintSection = '';
+    if (exercise.code_hint_title) {
+        hintSection = `
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 mb-2">${exercise.code_hint_title}</h3>
+            ${hintHtml}
+        `;
+    }
 
     let finalHtmlStructure;
 
