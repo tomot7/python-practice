@@ -514,6 +514,59 @@ team_scores = [
         </ol>
       `,
       note: 'このように、外側のループで大きなかたまりを取り出し、内側のループでその中身を一つずつ処理する、というのが入れ子ループの基本的な使い方です。'
+    },
+    {
+      id: 'kadai11',
+      title: '課題11：ファイルの行数を数えるコードを書こう 📄✍️',
+      library: 'Python基本 (ファイル入出力)',
+      description: 'ファイルを読み込み、そのファイルに何行のテキストが含まれているかを数えるのは、基本的なファイル操作の一つです。この課題で、ファイルの読み込みとループ処理の組み合わせを練習しましょう。',
+      task_title: '課題：',
+      task: `
+        <p class="mb-4">ファイル名 <code>filename</code> を引数にとり、そのファイルに含まれる行数を返す関数 <code>count_lines(filename)</code> を作成してください。</p>
+        
+        <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">1. 準備</h4>
+        <p class="mb-2">まず、以下のコードを実行して、演習に使うサンプルファイル <code>poem.txt</code> を作成してください。</p>
+        <pre class="code-block"><code># 準備コード
+poem_content = """The quick brown fox
+jumps over
+the lazy dog.
+"""
+with open('poem.txt', 'w', encoding='utf-8') as f:
+    f.write(poem_content)
+
+print("'poem.txt'が作成されました。")</code></pre>
+
+        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-2">2. 解答欄</h4>
+        <p class="mb-2">以下のコードセルに、<code>count_lines</code> 関数を完成させてください。</p>
+        <pre class="code-block"><code>def count_lines(filename):
+    # ここにコードを書いてください
+    # ヒント: ファイルを開き、forループで1行ずつ読み込みながらカウンターを増やす
+    pass
+</code></pre>
+
+        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-2">3. 実行と確認</h4>
+        <p class="mb-2">関数を作成したら、以下のコードを実行して、結果が <code>True</code> と表示されることを確認してください。</p>
+        <pre class="code-block"><code># 確認コード
+# count_lines 関数が正しく動作するかテストします
+line_count = count_lines('poem.txt')
+print(f"計算結果: count_lines('poem.txt') は {line_count} を返しました。")
+print(f"テスト結果: {line_count == 3}")
+</code></pre>
+      `,
+      data_description: '',
+      data: '',
+      code_hint_title: 'ヒント',
+      code_hint_text: `
+        <p>この課題を解くための考え方のステップです。</p>
+        <ol class="list-decimal list-inside mt-2">
+            <li class="mb-2"><strong>カウンターの準備:</strong> まず、行数を数えるための変数（例: <code>line_count = 0</code>）を関数の最初に用意します。</li>
+            <li class="mb-2"><strong>ファイルのオープン:</strong> <code>with open(filename, 'r', encoding='utf-8') as f:</code> を使ってファイルを開きます。</li>
+            <li class="mb-2"><strong>行のループ処理:</strong> ファイルオブジェクトはforループで直接使うと、一行ずつ文字列として取り出すことができます。(例: <code>for line in f:</code>)</li>
+            <li class="mb-2"><strong>カウントアップ:</strong> ループが一周するごと（一行読み込むごと）に、カウンターの値を1増やします（<code>line_count += 1</code>）。</li>
+            <li class="mb-2"><strong>結果を返す:</strong> ループがすべて終了したら、関数の最後にカウンターの値を <code>return</code> します。</li>
+        </ol>
+      `,
+      note: '空行も1行として数えます。ファイルの最後の行に改行がなくても、その行は1行として数えられます。'
     }
 ];
 
