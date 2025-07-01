@@ -567,6 +567,47 @@ print(f"テスト結果: {line_count == 3}")
         </ol>
       `,
       note: '空行も1行として数えます。ファイルの最後の行に改行がなくても、その行は1行として数えられます。'
+    },
+    {
+      id: 'kadai12',
+      title: '課題12：リスト内包表記を使いこなそう 📜✨',
+      library: 'Python基本 (内包表記)',
+      description: 'リスト内包表記は、既存のリストから新しいリストを効率的に作成するための簡潔な方法です。forループとif文を一行で表現できるため、コードが読みやすくなります。',
+      task_title: '課題：',
+      task: `
+        <p class="mb-4">数値のリスト <code>numbers</code> が与えられたとき、その中から偶数だけを取り出し、それぞれを2乗した新しいリストを返す関数 <code>square_evens(numbers)</code> を、<strong>リスト内包表記を使って</strong>作成してください。</p>
+        
+        <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">1. 準備データ</h4>
+        <p class="mb-2">この課題では、以下のリストを使用します。</p>
+        <pre class="code-block"><code>numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre>
+
+        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-2">2. 解答欄</h4>
+        <p class="mb-2">以下のコードセルに、<code>square_evens</code> 関数を完成させてください。</p>
+        <pre class="code-block"><code>def square_evens(numbers):
+    # ここにリスト内包表記を使ったコードを1行で書いてください
+    pass
+</code></pre>
+
+        <h4 class="text-lg font-semibold text-gray-700 mt-6 mb-2">3. 実行と確認</h4>
+        <p class="mb-2">関数を作成したら、以下のコードを実行して、結果が <code>True</code> と表示されることを確認してください。</p>
+        <pre class="code-block"><code># 確認コード
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+result = square_evens(numbers)
+expected = [4, 16, 36, 64, 100]
+print(f"計算結果: {result}")
+print(f"期待する結果: {expected}")
+print(f"テスト結果: {result == expected}")
+</code></pre>
+      `,
+      data_description: '',
+      data: '',
+      code_hint_title: 'ヒント',
+      code_hint_text: `
+        <p>リスト内包表記に条件を追加するには、<code>for</code>ループの後に<code>if</code>文を記述します。</p>
+        <p>基本形: <code>[式 for 要素 in リスト if 条件]</code></p>
+        <p>例えば、リスト <code>nums</code> から奇数だけを取り出すには、<code>[x for x in nums if x % 2 != 0]</code> のように書くことができます。</p>
+      `,
+      note: 'forループとif文を使って複数行で書く処理を、リスト内包表記なら1行で簡潔に記述できます。'
     }
 ];
 
