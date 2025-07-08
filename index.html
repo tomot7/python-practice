@@ -599,7 +599,7 @@ print(f"テスト結果: {result == expected}")
       data_description: '背景：',
       data: `
         以下の3つのクラスが事前に定義されています。これらのクラスは、指定された回数だけ 'Hello.\\n' という文字列を返すイテレータの機能を提供します。
-        \`\`\`python
+        <pre class="code-block"><code>
         class HelloForEver:
             def readline(self):
                 return 'Hello.\\n'
@@ -619,7 +619,7 @@ print(f"テスト結果: {result == expected}")
                 if line == '':
                     raise StopIteration
                 return line
-        \`\`\`
+        </code></pre>
     `,
       code_hint_title: 'ヒント：',
       code_hint_text: `
