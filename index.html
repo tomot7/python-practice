@@ -607,7 +607,134 @@ print(f"テスト結果: {result == expected}")
         <p>例えば、リスト <code>nums</code> の各要素を2倍にするには、<code>[x * 2 for x in nums]</code> のように書くことができます。</p>
       `,
       note: 'forループを使って新しいリストを作成する処理を、リスト内包表記なら1行で簡潔に記述できます。'
-    }
+    },
+        {
+            id: 'exercise13',
+            title: '課題13：クラスの継承と特殊メソッド',
+            content: `
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-3xl font-bold mb-4 text-gray-800 border-b-2 pb-2 border-indigo-500">課題13：クラスの継承と特殊メソッド</h3>
+                    <p class="mb-6 text-gray-700 leading-relaxed">
+                        Pythonのクラス機能、特に継承と特殊メソッドを活用して、既存のクラスの振る舞いを変更する課題です。
+                        与えられたクラスを継承し、指定された機能を持つ新しいクラスを作成してください。
+                    </p>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6 border border-gray-200">
+                        <h4 class="font-bold text-xl mb-2 text-gray-800">背景</h4>
+                        <p class="mb-3 text-gray-700">
+                            以下の3つのクラスが事前に定義されています。これらのクラスは、指定された回数だけ 'Hello.\\n' という文字列を返すイテレータの機能を提供します。
+                        </p>
+                        <pre><code class="language-python bg-gray-900 text-white p-4 rounded-md block text-sm">
+# 親クラス1: readlineメソッドを持つ
+class HelloForEver:
+    def readline(self):
+        return 'Hello.\\n'
+
+# 親クラス2: HelloForEverを継承し、回数制限機能を追加
+class HelloFile(HelloForEver):
+    def __init__(self, n):
+        self.n = n
+    def readline(self):
+        if self.n == 0:
+            return ''
+        self.n = self.n - 1
+        return super().readline()
+
+# 親クラス3: HelloFileを継承し、イテレータ機能を追加
+class HelloFileIterator(HelloFile):
+    def __iter__(self):
+        return self
+    def __next__(self):
+        line = self.readline()
+        if line == '':
+            raise StopIteration
+        return line
+                        </code></pre>
+                    </div>
+                    <div class="bg-indigo-50 p-6 rounded-lg shadow-inner border border-indigo-200">
+                        <h4 class="font-bold text-xl mb-2 text-indigo-700">課題</h4>
+                        <p class="mb-4 text-gray-700">
+                            <code>HelloFileIterator</code>クラスを継承して、<code>StringFileIterator</code>という新しいクラスを定義してください。
+                            このクラスは、初期化時に指定された任意の文字列を、指定された回数だけ返すようにします。
+                        </p>
+                        <p class="mb-4 text-gray-700">
+                            具体的には、以下の仕様を満たすように<code>__init__</code>メソッドと<code>readline</code>メソッドをオーバーライド（再定義）してください。
+                        </p>
+                        <ul class="list-disc list-inside mb-4 text-gray-700 space-y-1">
+                            <li><code>__init__(self, s, n)</code>: 文字列<code>s</code>と回数<code>n</code>を受け取り、インスタンス変数として保存します。</li>
+                            <li><code>readline(self)</code>: 呼び出されるたびに、保存した文字列<code>s</code>を返します。ただし、指定された回数<code>n</code>に達したら、空文字列<code>''</code>を返します。</li>
+                        </ul>
+                        <h5 class="font-semibold mt-6 mb-2 text-gray-800">実装するコード</h5>
+                        <pre><code class="language-python bg-gray-900 text-white p-4 rounded-md block text-sm">
+# 上で定義したクラス群が利用可能です
+# class HelloForEver: ...
+# class HelloFile(HelloForEver): ...
+# class HelloFileIterator(HelloFile): ...
+
+class StringFileIterator(HelloFileIterator):
+    # ここに __init__ と readline メソッドを実装してください
+    pass # passは削除してください
+                        </code></pre>
+                        <h5 class="font-semibold mt-6 mb-2 text-gray-800">検証コード</h5>
+                        <p class="mb-2 text-gray-700">以下のコードを実行し、出力が<code>True</code>になることを確認してください。</p>
+                        <pre><code class="language-python bg-gray-900 text-white p-4 rounded-md block text-sm">
+# 検証の前に、前提となるクラスを定義する必要があります
+class HelloForEver:
+    def readline(self):
+        return 'Hello.\\n'
+
+class HelloFile(HelloForEver):
+    def __init__(self, n):
+        self.n = n
+    def readline(self):
+        if self.n == 0:
+            return ''
+        self.n = self.n - 1
+        return super().readline()
+
+class HelloFileIterator(HelloFile):
+    def __iter__(self):
+        return self
+    def __next__(self):
+        line = self.readline()
+        if line == '':
+            raise StopIteration
+        return line
+
+# ここに実装したStringFileIteratorクラスを記述します
+
+# --- 検証コード ---
+f = StringFileIterator('abc', 3)
+print(list(f) == ['abc', 'abc', 'abc'])
+
+g = StringFileIterator('test', 5)
+print(list(g) == ['test', 'test', 'test', 'test', 'test'])
+                        </code></pre>
+                    </div>
+                    <div class="mt-6">
+                        <button onclick="document.getElementById('solution13').classList.toggle('hidden')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                            解答例を表示/非表示
+                        </button>
+                        <div id="solution13" class="hidden mt-4 bg-gray-800 p-4 rounded-lg">
+                             <h4 class="font-bold text-lg mb-2 text-white">解答例</h4>
+                             <pre><code class="language-python bg-gray-900 text-white p-4 rounded-md block text-sm">
+class StringFileIterator(HelloFileIterator):
+    def __init__(self, s, n):
+        # 親の__init__は呼ばずに、自分で必要なインスタンス変数を設定する
+        self.s = s  # 返すべき文字列
+        self.n = n  # 残りの回数
+
+    def readline(self):
+        # readlineメソッドをオーバーライドして、self.sを返すように変更
+        if self.n == 0:
+            return ''
+        self.n = self.n - 1
+        return self.s
+                             </code></pre>
+                        </div>
+                    </div>
+                </div>
+            `
+        }
 ];
 
 const sidebarNav = document.getElementById('sidebar-nav');
