@@ -329,11 +329,11 @@ def generate_student_report(student):
     attendance = student["attendance_rate"]
     avg_score = calculate_average_score(scores)
     overall_status = determine_overall_status(avg_score, attendance)
-    report = f"Student: {name}\\n"
-    report += f"  Scores: {scores}\\n"
-    report += f"  Average Score: {avg_score:.2f}\\n"
-    report += f"  Attendance Rate: {attendance*100}%\\n"
-    report += f"  Status: {overall_status}\\n"
+    report = f"Student: {name}\n"
+    report += f"  Scores: {scores}\n"
+    report += f"  Average Score: {avg_score:.2f}\n"
+    report += f"  Attendance Rate: {attendance*100}%\n"
+    report += f"  Status: {overall_status}\n"
     report += "-" * 20
     return report
 print("Generating Student Reports...")
@@ -342,7 +342,7 @@ all_reports = ""
 number_of_honors_students = 0
 for student_record in students_data:
     individual_report = generate_student_report(student_record)
-    all_reports += individual_report + "\\n"
+    all_reports += individual_report + "\n"
     avg_for_honors_check = calculate_average_score(student_record["scores"])
     if avg_for_honors_check >= HONORS_THRESHOLD_SCORE and student_record["attendance_rate"] >= MINIMUM_ATTENDANCE_RATE:
         number_of_honors_students += 1
@@ -598,11 +598,11 @@ print(f"テスト結果: {result == expected}")
       task: '与えられたクラスを継承し、指定された機能を持つ新しいクラスを作成してください。具体的な内容は以下の説明を参照してください。',
       data_description: '背景：',
       data: `
-        以下の3つのクラスが事前に定義されています。これらのクラスは、指定された回数だけ 'Hello.\\n' という文字列を返すイテレータの機能を提供します。
+        以下の3つのクラスが事前に定義されています。これらのクラスは、指定された回数だけ 'Hello.\n' という文字列を返すイテレータの機能を提供します。
         <pre class="code-block"><code>
 class HelloForEver:
     def readline(self):
-        return 'Hello.\\n'
+        return 'Hello.\n'
 class HelloFile(HelloForEver):
     def __init__(self, n):
         self.n = n
@@ -630,6 +630,32 @@ class HelloFileIterator(HelloFile):
         </ul>
     `,
       note: ''
+    },
+    {
+      id: 'kadai14',
+      title: '課題14：CSVファイルを入出力してみよう 📄✍️',
+      library: 'csv',
+      description: 'CSV (Comma-Separated Values) は、カンマで区切られたテキストデータ形式で、スプレッドシートやデータベースの情報を保存するのによく使われます。Pythonの `csv` モジュールを使うと、これらのファイルを簡単に読み書きできます。',
+      task_title: '課題：',
+      task: '以下の手順に従って、CSVファイルの読み書きを実践してください。\n1. **書き込み:** 与えられた `student_data` を `students.csv` という名前のファイルに書き出してください。各行が1人の生徒のデータ（名前、学年、成績）になるようにします。\n2. **読み込み:** 書き出した `students.csv` ファイルを読み込み、内容をコンソールに表示してください。\n3. **提出:** 作成した `students.csv` ファイルを提出してください。',
+      data_description: 'データ（Pythonのリスト）：',
+      data_code_lang: 'python',
+      data: `
+student_data = [
+    ['Taro Yamada', '1', 'A'],
+    ['Hanako Suzuki', '2', 'B'],
+    ['Ichiro Tanaka', '1', 'C']
+]`,
+      code_hint_title: 'ヒント：使うかもしれない `csv` モジュールの関数',
+      code_hint_text: `
+        <p>ファイルを開くには: <code>with open('ファイル名', 'w', newline='', encoding='utf-8') as f:</code> (書き込みの場合) や <code>with open('ファイル名', 'r', encoding='utf-8') as f:</code> (読み込みの場合) を使います。</p>
+        <p>CSVライターオブジェクトを作成するには: <code>csv.writer(ファイルオブジェクト)</code></p>
+        <p>複数行を一度に書き込むには: <code>writer.writerows(データ)</code></p>
+        <p>CSVリーダーオブジェクトを作成するには: <code>csv.reader(ファイルオブジェクト)</code></p>
+        <p>リーダーオブジェクトから1行ずつデータを読み込むには: <code>for row in reader:</code></p>
+        <p>書き込み時に <code>newline=''</code> を指定するのが一般的です。これにより、不要な空行が挿入されるのを防ぎます。</p>
+      `,
+      note: 'この課題では、まずPythonでCSVファイルを作成し、次にそのファイルを読み込むという一連の流れを体験します。'
     }
 ];
 
@@ -850,4 +876,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 </body>
-</ht�
+</html>
