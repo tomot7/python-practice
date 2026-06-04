@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ゼロから学ぶ！Pythonプログラミング入門ハンズオン</title>
+    <meta name="description" content="中学生・初心者のためのPythonプログラミング体験型学習教材。Debian系Linux・macOS対応。ブラウザ上で実行をシミュレーションできるインタラクティブな学び場。">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="show-linux">
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="logo-container" style="margin-bottom: 0; padding-bottom: 0; border: none;">
+            <div class="logo-icon">Py</div>
+            <span class="logo-text">Python入門</span>
+        </div>
+        <button class="menu-toggle" aria-label="メニューを開く">
+            <svg style="width:24px;height:24px;fill:currentColor" viewBox="0 0 24 24">
+                <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="logo-container">
+            <div class="logo-icon">Py</div>
+            <div class="logo-text">Pythonハンズオン</div>
+        </div>
+
+        <!-- OS Switcher -->
+        <div class="os-selector-box">
+            <div class="os-selector-title">使用しているOSを選択</div>
+            <div class="os-tabs">
+                <button class="os-tab active" data-os="linux" title="Debian系 Linux">
+                    <svg viewBox="0 0 24 24">
+                        <!-- Linux Penguin Icon Silhouette -->
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4M12,18C8.69,18 6,15.31 6,12C6,10 7,8.25 8.5,7.18L9.5,8.18C8.6,8.87 8,10.1 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12C16,10.1 15.4,8.87 14.5,8.18L15.5,7.18C17,8.25 18,10 18,12C18,15.31 15.31,18 12,18Z"/>
+                    </svg>
+                    <span>Linux (pyenv)</span>
+                </button>
+                <button class="os-tab" data-os="mac" title="macOS">
+                    <svg viewBox="0 0 24 24">
+                        <!-- Apple Logo Silhouette -->
+                        <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.1,16.67C20.08,16.74 19.67,18.11 18.71,19.5M15.97,4.17C16.63,3.37 17.07,2.28 16.95,1C16,1.04 14.9,1.6 14.24,2.38C13.68,3.04 13.19,4.14 13.34,5.39C14.39,5.47 15.4,4.88 15.97,4.17Z"/>
+                    </svg>
+                    <span>Mac (ターミナル)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Navigation -->
+        <nav>
+            <div class="nav-title">メニュー</div>
+            <ul class="nav-list">
+                <li class="nav-item active"><a href="#intro">プログラミングとは</a></li>
+                <li class="nav-item"><a href="#setup">開発の準備をしよう</a></li>
+                <li class="nav-item"><a href="#lesson1">レッスン1: 画面に出力</a></li>
+                <li class="nav-item"><a href="#lesson2">レッスン2: 計算と変数</a></li>
+                <li class="nav-item"><a href="#lesson3">レッスン3: 条件分岐(if)</a></li>
+                <li class="nav-item"><a href="#lesson4">レッスン4: 繰り返し(for)</a></li>
+                <li class="nav-item"><a href="#lesson5">レッスン5: リスト</a></li>
+                <li class="nav-item"><a href="#playground">Python遊び場</a></li>
+                <li class="nav-item"><a href="#quiz">力試しクイズ</a></li>
+                <li class="nav-item"><a href="#minigame">ミニゲームを作ろう</a></li>
+            </ul>
+        </nav>
+
+        <!-- Theme Toggle -->
+        <div class="theme-toggle-box">
+            <button class="theme-btn">
+                <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24">
+                    <path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" />
+                </svg>
+                <span>ライトモードへ</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main>
+        <!-- Intro Section -->
+        <section id="intro">
+            <h1>Pythonプログラミング入門 🐍</h1>
+            <p>ようこそ！プログラミングの世界へ。このサイトでは、中学生の皆さんをはじめとするプログラミング完全初心者の方が、手軽に楽しく<strong>Python（パイソン）</strong>の基本を学べるハンズオン教材です。</p>
+            
+            <div class="callout callout-info">
+                <div class="callout-title">
+                    <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M11,9H13V7H11V9M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/></svg>
+                    <span>Python（パイソン）ってどんな言葉？</span>
+                </div>
+                <p>Pythonは世界中で大人気のプログラミング言語です。AI（人工知能）の開発や、YouTube、Instagramといった有名なアプリの裏側でも使われています。英語に近くて読み書きしやすいのが特徴です！</p>
+            </div>
+            
+            <p>左のメニューから順に進めていきましょう。まずは手元のPCで動かせるようにするための準備からです！</p>
+        </section>
+
+        <!-- Setup Section -->
+        <section id="setup">
+            <h2>開発の準備をしよう 💻</h2>
+            
+            <!-- OS specific message (will display based on JS toggling body class) -->
+            <div class="os-content os-linux">
+                <p>あなたは <span class="badge badge-linux">Debian系 Linux (pyenv環境)</span> の説明を表示しています。</p>
+                
+                <h3>1. 端末（ターミナル）を開く</h3>
+                <p>Linuxデスクトップ環境で「端末」や「Terminal」アプリを探して起動してください。黒い画面が表示されます。</p>
+                
+                <h3>2. Pythonが正しく入っているか確認する</h3>
+                <p>ターミナルに以下のコマンドを半角英数字で入力し、Enterキーを押してください。</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-title">Terminal</span>
+                        <button class="copy-btn">
+                            <span>コピー</span>
+                        </button>
+                    </div>
+                    <pre><code>python --version</code></pre>
+                </div>
+                
+                <p><strong>表示結果の例：</strong> <code>Python 3.10.8</code> と表示されれば準備完了です！</p>
+                
+                <h3>3. 対話モードを起動する</h3>
+                <p>ターミナルに <code>python</code> と入力してEnterを押します。</p>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-title">Terminal</span>
+                        <button class="copy-btn">
+                            <span>コピー</span>
+                        </button>
+                    </div>
+                    <pre><code>python</code></pre>
+                </div>
+                <p>画面に <code>&gt;&gt;&gt;</code> という記号が表示されましたか？これがPythonに命令を送る準備ができた合図（<strong>対話モード</strong>）です！</p>
+            </div>
+
+            <div class="os-content os-mac">
+                <p>あなたは <span class="badge badge-mac">MacBook (標準ターミナル)</span> の説明を表示しています。</p>
+                
+                <h3>1. ターミナルを開く</h3>
+                <p>MacのFinderで「アプリケーション」＞「ユーティリティ」フォルダを開き、「ターミナル.app」を起動します。（もしくは、Spotlight検索で「ターミナル」と検索して起動します）</p>
+                
+                <h3>2. Python3が正しく入っているか確認する</h3>
+                <p>ターミナルに以下のコマンドを半角英数字で入力し、Enterキーを押してください。</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-title">Terminal</span>
+                        <button class="copy-btn">
+                            <span>コピー</span>
+                        </button>
+                    </div>
+                    <pre><code>python3 --version</code></pre>
+                </div>
+                
+                <p><strong>表示結果の例：</strong> <code>Python 3.10.8</code>（または3.x.xの別バージョン）が表示されればOKです！</p>
+                
+                <h3>3. 対話モードを起動する</h3>
+                <p>ターミナルに <code>python3</code> と入力してEnterを押します。</p>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-title">Terminal</span>
+                        <button class="copy-btn">
+                            <span>コピー</span>
+                        </button>
+                    </div>
+                    <pre><code>python3</code></pre>
+                </div>
+                <p>画面に <code>&gt;&gt;&gt;</code> という記号が表示されましたか？これがPythonに命令を送る準備ができた合図（<strong>対話モード</strong>）です！</p>
+            </div>
+
+            <div class="callout callout-warning">
+                <div class="callout-title">
+                    <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M12,2L1,21H23L12,2M12,6L19.53,19H4.47L12,6M11,10V14H13V10H11M11,16V18H13V16H11Z"/></svg>
+                    <span>【重要】OSによる操作とキーの違い</span>
+                </div>
+                <ul>
+                    <li class="os-linux"><strong>Linuxのキー：</strong> コピーは <code>Ctrl + Shift + C</code>、貼り付けは <code>Ctrl + Shift + V</code> になることが多いです。</li>
+                    <li class="os-mac"><strong>Macのキー：</strong> コピーは <code>Command ⌘ + C</code>、貼り付けは <code>Command ⌘ + V</code> です。</li>
+                    <li><strong>対話モードの終わらせ方（共通）：</strong> <code>&gt;&gt;&gt;</code> の画面を終了して元に戻りたいときは、<code>exit()</code> と入力してEnterを押すか、キーボードの <code>Ctrl + D</code> を押してください。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Lesson 1 -->
+        <section id="lesson1">
+            <h2>レッスン1: 画面に出力しよう 💬</h2>
+            <p>まずは、画面に文字を表示させる方法を学びましょう。Pythonで文字を表示するには <code>print()</code>（プリント）関数を使います。</p>
+            
+            <p>手元のターミナル（対話モード <code>&gt;&gt;&gt;</code>）に以下のように入力してみましょう。</p>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">Python対話モード</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code><span class="code-func">print</span>(<span class="code-str">"こんにちは"</span>)</code></pre>
+            </div>
+
+            <p>Enterキーを押すと、すぐ下に <code>こんにちは</code> と表示されます！</p>
+
+            <div class="callout callout-info">
+                <div class="callout-title">💡 中学生向けワンポイント解説</div>
+                <p>文字を囲んでいる <code>"</code>（ダブルクォーテーション）は、「これは文字データだよ！」とPythonに教えるためのマークです。半角で入力する必要があります。もし全角の <code>”</code> を使うとエラーになるので注意しよう！</p>
+            </div>
+
+            <p><strong>練習：</strong> 自分の名前を表示させてみよう。例えば <code>print("太郎")</code> のように入力してみよう！</p>
+        </section>
+
+        <!-- Lesson 2 -->
+        <section id="lesson2">
+            <h2>レッスン2: 計算と変数 🧮</h2>
+            <p>Pythonは、計算（算術演算）も大得意です。足し算や引き算の記号はキーボードから入力します。</p>
+
+            <h3>1. 簡単な計算をしてみよう</h3>
+            <ul>
+                <li>たし算： <code>+</code> (プラス)</li>
+                <li>ひき算： <code>-</code> (マイナス)</li>
+                <li>かけ算： <code>*</code> (アスタリスク) ※ <code>×</code> ではありません</li>
+                <li>わり算： <code>/</code> (スラッシュ) ※ <code>÷</code> ではありません</li>
+            </ul>
+
+            <p>対話モードで <code>5 + 3</code> や <code>10 * 3</code> と入力してEnterを押してみましょう。答えが返ってきます。</p>
+
+            <h3>2. 変数（へんすう）を使ってみよう</h3>
+            <p>プログラミングでは、値（数字や文字）を覚えておくための<strong>「名前がついた箱」</strong>を作ることができます。これを<strong>変数（へんすう）</strong>と呼びます。</p>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">Python対話モード</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code>x = <span class="code-num">10</span>
+y = <span class="code-num">5</span>
+<span class="code-func">print</span>(x + y)</code></pre>
+            </div>
+
+            <p><strong>解説：</strong></p>
+            <ul>
+                <li><code>x = 10</code> は、「x という名前の箱に <code>10</code> を入れる（代入する）」という意味です。</li>
+                <li><code>print(x + y)</code> は、箱に入っている中身を足し算して画面に表示させます。</li>
+            </ul>
+        </section>
+
+        <!-- Lesson 3 -->
+        <section id="lesson3">
+            <h2>レッスン3: 条件によって分ける（if文） 🛣️</h2>
+            <p>「もし〜なら、◯◯する。そうでなければ、△△する」というように、条件によってコンピュータの動きを変える方法を<strong>条件分岐（じょうけんぶんき）</strong>と呼びます。</p>
+            <p>Pythonでは <code>if</code>（イフ）を使います。</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">Pythonコード例</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code>score = <span class="code-num">80</span>
+
+<span class="code-keyword">if</span> score &gt;= <span class="code-num">70</span>:
+    <span class="code-func">print</span>(<span class="code-str">"合格！おめでとう！"</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-func">print</span>(<span class="code-str">"もうすこし！がんばろう！"</span>)</code></pre>
+            </div>
+
+            <div class="callout callout-warning">
+                <div class="callout-title">⚠️ 超重要！インデント（字下げ）のルール</div>
+                <p>Pythonでは、<code>if</code> や <code>else</code> の次の行は、<strong>スペース4つ分右にずらして</strong>書きます。これを「インデント」と呼びます。インデントがあることで、「どこからどこまでが if の中の処理か」を判断しています。半角スペース4つでずらすのが基本です！</p>
+            </div>
+
+            <h3>比較の記号（比較演算子）</h3>
+            <ul>
+                <li><code>a &gt; b</code> : a は b より大きい</li>
+                <li><code>a &gt;= b</code> : a は b 以上（同じか大きい）</li>
+                <li><code>a == b</code> : a と b は等しい（イコールが2つ重なることに注意！）</li>
+                <li><code>a != b</code> : a と b は等しくない</li>
+            </ul>
+        </section>
+
+        <!-- Lesson 4 -->
+        <section id="lesson4">
+            <h2>レッスン4: 繰り返し処理（for文） 🔄</h2>
+            <p>同じ処理を何回も繰り返したいときは、<code>for</code>（フォー）文を使います。</p>
+            <p>例えば、画面に「ヤッホー！」と5回表示させたい場合、次のように書きます。</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">Pythonコード例</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code><span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-func">range</span>(<span class="code-num">5</span>):
+    <span class="code-func">print</span>(<span class="code-str">"ヤッホー！"</span>)</code></pre>
+            </div>
+
+            <p><strong>解説：</strong></p>
+            <ul>
+                <li><code>range(5)</code>（レンジ）は、「0から4までの5つの数字（0, 1, 2, 3, 4）を順番に用意する」という命令です。</li>
+                <li>変数 <code>i</code> の中に、順番に数字が入りながら、インデントされた <code>print()</code> が5回実行されます。</li>
+            </ul>
+
+            <div class="callout callout-info">
+                <div class="callout-title">💡 回数を確認してみよう</div>
+                <p><code>print(i)</code> のように実行すると、<code>i</code> の中に今何の数字が入っているかを表示できます。プログラミングの世界では、数は <strong>1 ではなく 0 から数え始める</strong> ことが多いです！</p>
+            </div>
+        </section>
+
+        <!-- Lesson 5 -->
+        <section id="lesson5">
+            <h2>レッスン5: たくさんのデータをまとめる（リスト） 🗄️</h2>
+            <p>これまでは、変数という「1つの箱」に1つのデータだけを入れてきました。しかし、部活のメンバー名やテストの点数一覧など、たくさんのデータをまとめて扱いたいときは<strong>リスト（別名：配列）</strong>を使います。</p>
+            <p>リストは <code>[ ]</code>（角カッコ）を使って作ります。</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">Pythonコード例</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code>fruits = [<span class="code-str">"りんご"</span>, <span class="code-str">"バナナ"</span>, <span class="code-str">"ぶどう"</span>]
+<span class="code-func">print</span>(fruits[<span class="code-num">0</span>])  <span class="code-comment"># 一番最初の「りんご」を表示</span>
+<span class="code-func">print</span>(<span class="code-func">len</span>(fruits)) <span class="code-comment"># リストの長さ（何個あるか）を表示</span></code></pre>
+            </div>
+
+            <p><strong>リストのポイント：</strong></p>
+            <ul>
+                <li>リストの中身を取り出すときは <code>リスト名[番号]</code> と書きます。</li>
+                <li>ここでも番号は <strong>0番目</strong> からスタートします！ <code>fruits[0]</code> は「りんご」、<code>fruits[1]</code> は「バナナ」になります。</li>
+                <li><code>len()</code> は、リストの中にデータがいくつ入っているかを教えてくれる便利な命令です。</li>
+            </ul>
+        </section>
+
+        <!-- Python Playground Sandbox -->
+        <section id="playground">
+            <h2>Python遊び場（ブラウザ実行シミュレータ） 🎮</h2>
+            <p>手元にPython環境がないときや、ちょっと動作を確認したいとき、下の黒い画面（模擬ターミナル）でPythonコードを実行できます。1行ずつ入力してEnterを押してみましょう！</p>
+            
+            <div class="terminal-simulator">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="terminal-dot dot-red"></span>
+                        <span class="terminal-dot dot-yellow"></span>
+                        <span class="terminal-dot dot-green"></span>
+                    </div>
+                    <div class="terminal-title">Python 3.10.8 (Simulated Interactive Shell)</div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-welcome">
+                        Welcome to Python Simulator! (中学生向けの簡易シミュレータです)<br>
+                        ※ 変数の代入やprint()、簡単な足し算・掛け算が動きます。
+                    </div>
+                    
+                    <div class="terminal-input-wrapper">
+                        <span class="terminal-prompt">&gt;&gt;&gt;</span>
+                        <input type="text" id="terminal-input" class="terminal-input-field" placeholder="コードを入力してEnterを押してね" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+                <div class="terminal-controls">
+                    <div class="terminal-presets">
+                        <span style="font-size:0.8rem; color:var(--text-secondary); align-self:center; margin-right:4px;">入力例:</span>
+                        <button class="preset-btn" data-code="print(&quot;こんにちは！&quot;)">Hello World</button>
+                        <button class="preset-btn" data-code="a = 150">aに150を代入</button>
+                        <button class="preset-btn" data-code="print(a * 2)">aを2倍して出力</button>
+                        <button class="preset-btn" data-code="fruits = [&quot;りんご&quot;, &quot;みかん&quot;]">リスト作成</button>
+                        <button class="preset-btn" data-code="print(len(fruits))">リストの個数を数える</button>
+                    </div>
+                    <button class="clear-btn" title="画面をクリアして変数をリセットします">
+                        <svg style="width:14px;height:14px;fill:currentColor" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>
+                        <span>リセット</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz">
+            <h2>力試しクイズ ⭐</h2>
+            <p>レッスンで学んだ内容をクイズで振り返ってみましょう！クリックすると正解がわかります。</p>
+
+            <!-- Quiz 1 -->
+            <div class="quiz-card">
+                <div class="quiz-question">Q1. 画面に「Hello」と表示させる正しい命令はどれ？</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-correct="false">A) write("Hello")</button>
+                    <button class="quiz-option" data-correct="true" data-explain-btn>B) print("Hello")</button>
+                    <button class="quiz-option" data-correct="false">C) output("Hello")</button>
+                </div>
+                <div class="quiz-feedback" data-explain="Pythonで画面に出力するときは print() 関数を使います。"></div>
+            </div>
+
+            <!-- Quiz 2 -->
+            <div class="quiz-card">
+                <div class="quiz-question">Q2. Pythonで「x = 5」と書いた時の正しい説明はどれ？</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-correct="false">A) x と 5 は数学のイコールのように完全に等しい</button>
+                    <button class="quiz-option" data-correct="true">B) x という名前の変数（箱）に 5 を入れる（代入する）</button>
+                    <button class="quiz-option" data-correct="false">C) x から 5 を引き算する</button>
+                </div>
+                <div class="quiz-feedback" data-explain="プログラミングの単一の「=」は右側の値を変数に「代入する」という命令になります。等しいかどうかを比べる時は「==」を使用します。"></div>
+            </div>
+
+            <!-- Quiz 3 -->
+            <div class="quiz-card">
+                <div class="quiz-question">Q3. Pythonのif文やfor文で、次の行を右にずらすルールを何と呼ぶ？</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-correct="true">A) インデント (字下げ)</button>
+                    <button class="quiz-option" data-correct="false">B) スペーシング</button>
+                    <button class="quiz-option" data-correct="false">C) タブリンク</button>
+                </div>
+                <div class="quiz-feedback" data-explain="Pythonはスペース4つでコードの固まり（ブロック）を表現する「インデント」というルールがとても厳しく決まっています。"></div>
+            </div>
+        </section>
+
+        <!-- Mini Game Section -->
+        <section id="minigame">
+            <h2>じゃんけんゲームを作ろう 🎮</h2>
+            <p>最後に、これまでに学んだ <strong>変数</strong>、<strong>if文</strong>、<strong>リスト</strong> を使って、コンピュータと対戦する「じゃんけんゲーム」のプログラムを書いてみましょう！</p>
+            
+            <p>以下のコードをコピーして、手元のPython環境でファイルを作って実行してみましょう。対話モードではなく、エディタ（テキストエディタやVSCodeなど）に貼り付けて、<code>janken.py</code> という名前で保存して、ターミナルで <code>python janken.py</code>（Macは <code>python3 janken.py</code>）を実行することで動かせます。</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">janken.py</span>
+                    <button class="copy-btn">
+                        <span>コピー</span>
+                    </button>
+                </div>
+                <pre><code><span class="code-comment"># ランダムな機能を使う準備</span>
+<span class="code-keyword">import</span> random
+
+<span class="code-comment"># 手のリスト</span>
+hands = [<span class="code-str">"グー"</span>, <span class="code-str">"チョキ"</span>, <span class="code-str">"パー"</span>]
+
+<span class="code-comment"># プレイヤーの入力を受け取る (0, 1, 2)</span>
+<span class="code-func">print</span>(<span class="code-str">"--- じゃんけんスタート！ ---"</span>)
+player_input = <span class="code-func">input</span>(<span class="code-str">"0:グー, 1:チョキ, 2:パー から選んで数字を入力してね: "</span>)
+player = <span class="code-func">int</span>(player_input)
+
+<span class="code-comment"># コンピュータの手をランダムに決める</span>
+computer = random.randint(<span class="code-num">0</span>, <span class="code-num">2</span>)
+
+<span class="code-comment"># それぞれの手を表示</span>
+<span class="code-func">print</span>(<span class="code-str">"あなた:"</span> + hands[player])
+<span class="code-func">print</span>(<span class="code-str">"相手:"</span> + hands[computer])
+
+<span class="code-comment"># 勝敗を判定する</span>
+<span class="code-keyword">if</span> player == computer:
+    <span class="code-func">print</span>(<span class="code-str">"あいこです！"</span>)
+<span class="code-keyword">elif</span> (player == <span class="code-num">0</span> <span class="code-keyword">and</span> computer == <span class="code-num">1</span>) <span class="code-keyword">or</span> (player == <span class="code-num">1</span> <span class="code-keyword">and</span> computer == <span class="code-num">2</span>) <span class="code-keyword">or</span> (player == <span class="code-num">2</span> <span class="code-keyword">and</span> computer == <span class="code-num">0</span>):
+    <span class="code-func">print</span>(<span class="code-str">"あなたの勝ち！"</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-func">print</span>(<span class="code-str">"あなたの負け..."</span>)
+</code></pre>
+            </div>
+
+            <h3>💡 コードの解説</h3>
+            <ul>
+                <li><code>import random</code> : Pythonに標準で備わっているランダムな数を作る機能（モジュール）を取り込んでいます。</li>
+                <li><code>input()</code> : 画面からユーザーが文字を入力するのを待ちます。入力された文字は <code>int()</code> を使って数字に変換して <code>player</code> という変数に入れています。</li>
+                <li><code>hands[player]</code> : リストから入力された番号（0, 1, 2）に応じて手を取り出します。</li>
+                <li><code>randint(0, 2)</code> : 0から2までのランダムな整数（0, 1, 2）を作ってコンピュータの手にします。</li>
+                <li>最後の <code>if-elif-else</code> : じゃんけんのルールに沿って、あいこ・勝ち・負けを条件分岐で判定しています。</li>
+            </ul>
+
+            <!-- Simulated game play -->
+            <div class="mini-game-box">
+                <h3>👇 ブラウザでじゃんけんを体験してみよう！</h3>
+                <p>上のPythonコードと同じ仕組みで動くじゃんけんのシミュレータです。手を選んでクリックしてね！</p>
+                
+                <div class="game-board">
+                    <div class="game-choice" data-hand="rock" title="グー">✊</div>
+                    <div class="game-choice" data-hand="scissors" title="チョキ">✌️</div>
+                    <div class="game-choice" data-hand="paper" title="パー">✋</div>
+                </div>
+
+                <div class="game-status" id="game-status">手を選んで勝負！</div>
+                
+                <div class="game-results">
+                    <div class="result-card">
+                        <div class="result-label">あなたの手</div>
+                        <div class="result-val" id="player-choice-result">❓</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">コンピュータの手</div>
+                        <div class="result-val" id="computer-choice-result">❓</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary);">
+                    現在の勝ち数: <strong id="wins-count" style="color: var(--warning); font-size: 1.25rem;">0</strong> 回
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
